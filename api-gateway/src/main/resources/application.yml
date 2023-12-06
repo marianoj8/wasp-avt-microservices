@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: optional:configserver:http://localhost:8888
+
+# server:
+#   port: 9191
+
+# spring:
+#   host1: "http://localhost:4200"
+#   host2: "http://localhost:80"
+#   host3: "http://192.168.113.14"
+#   application:
+#     name: API-GATEWAY
+#   cloud:
+#     config:
+#       import-check:
+#         enabled: false
+#     gateway:
+# ##  Automatically generated routes.
+# #       discovery:
+# #         locator:
+# #           enabled: true
+# #           lower-case-service-id: true
+# #       client:
+# #         health-indicator:
+# #           include-description: true
+#
+#       ### All manually Routes declaration
+#         routes:
+#          - id: EMPLOYEE-SERVICE
+#            uri: lb://EMPLOYEE-SERVICE
+#            predicates:
+#            - Path=/v1/employees/**
+#
+#          - id: DEPARTMENT-SERVICE
+#            uri: lb://DEPARTMENT-SERVICE
+#            predicates:
+#            - Path=/v1/departments/**
+#
+#          - id: ORGANIZATION-SERVICE
+#            uri: lb://ORGANIZATION-SERVICE
+#            predicates:
+#            - Path=/v1/organizations/**
+#
+# eureka:
+#   instance:
+#     client:
+#       serverUrl:
+#         defaultZone: http://localhost:8761/eureka/
+#
+#
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#
+# logging:
+#   level:
+#     org:
+#       springframework:
+#         web: DEBUG
+#         cloud:
+#           gateway:
+#             handler:
+#               RoutePredicateHandlerMapping: DEBUG
+#   pattern:
+#      level: '%5p [${spring.application.name:}, %X{traceId:-}, %X{spanId:-}]'
+
+
+# zuul:
+#   sensitive-headers: Cookie

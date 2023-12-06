@@ -1,0 +1,126 @@
+version: "3.8"
+
+services:
+  db:
+    env_file:
+      - .env
+    image: mysql:${WASP_DB_TAG}
+    container_name: wasp-avt-db
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PWD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - wasp-avt-db:/var/lib/mysql
+    networks:
+      - backendNetwork
+
+# mysql> CREATE USER 'exporter'@'%' IDENTIFIED BY 'exporterpassword' WITH MAX_USER_CONNECTIONS 3;
+# mysql> GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'%';
+
+  mysql-exporter:
+    env_file:
+      - .env
+    image: prom/mysqld-exporter:${MYSQL_EXPORTER_TAG}
+    container_name: wasp-avt-mysql-exporter
+    ports:
+      - ${MYSQL_EXPORTER_PORT}:9104
+    volumes:
+      - ./mysql-exporter/.my.cnf:/root/.my.cnf
+    environment:
+      - DATA_SOURCE_NAME='${MYSQL_USER}:${MYSQL_PASSWORD}@(localhost:3306)/db'
+      - collect.info_schema.tablestats=true
+      - collect.info_schema.userstats=true
+      - collect.info_schema.query_response_time=true
+      - collect.auto_increment.columns=true
+      - collect.binlog_size=true
+      - collect.perf_schema.eventsstatements=true
+      - collect.perf_schema.eventswaits=true
+      - collect.perf_schema.file_events=true
+      - collect.perf_schema.indexiowaits=true
+      - collect.perf_schema.tableiowaits=true
+      - collect.perf_schema.tablelocks=true
+    depends_on:
+      - db
+    networks:
+      - backendNetwork
+
+  spring:
+    env_file:
+      - .env
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: waspti/wasp-avt-api:${WASP_API_TAG}
+    container_name: wasp-avt-api
+    ports:
+      - ${API_PORT}:8080
+    depends_on:
+      - db
+    volumes:
+      - wasp-avt-api:/wasp_avt_api.jar
+    networks:
+      - backendNetwork
+      - frontendNetwork
+
+  angular:
+    env_file:
+      - .env
+    image: waspti/wasp-avt-ui:${WASP_UI_TAG}
+    container_name: wasp-avt-ui
+    ports:
+      - ${UI_PORT}:80
+    depends_on:
+      - spring
+    networks:
+      - backendNetwork
+      - frontendNetwork
+
+  smtp:
+    env_file:
+      - .env
+    image: maildev/maildev
+    container_name: maildev
+    ports:
+      - ${SMTP_PORT}:1025
+      - ${SMTP_WEBAPP_PORT}:1080
+    networks:
+      - backendNetwork
+      - frontendNetwork
+
+
+  prometheus:
+    env_file:
+      - .env
+    image: prom/prometheus:${PROMETHEUS_TAG}
+    container_name: prometheus
+    depends_on:
+      - spring
+      - db
+    volumes:
+      - "./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - ${PROMETHEUS_PORT}:9090
+
+  grafana:
+    env_file:
+      - .env
+    image: grafana/grafana:${GRAFANA_TAG}
+    container_name: grafana
+    ports:
+      - ${GRAFANA_PORT}:3000
+
+volumes:
+  wasp-avt-db:
+  wasp-avt-api:
+
+networks:
+  backendNetwork:
+  frontendNetwork:

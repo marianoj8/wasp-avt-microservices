@@ -1,0 +1,71 @@
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+  application:
+    name: AUTH-SERVICE
+#
+# server:
+#   port: 8083
+#
+# spring:
+#   host1: "http://localhost:4200"
+#   host2: "http://localhost:4200/"
+#   host3: "http://localhost:80"
+#   host4: "http://localhost:80/"
+#   host5: "http://192.168.113.14"
+#   host6: "http://192.168.113.14:80"
+#   host7: "http://192.168.113.14:80"
+#   host8: "http://192.168.113.14:8080"
+#   host9: "http://192.168.113.14:8080/"
+#   config:
+#       import: optional:configserver:http://localhost:8888
+#   application:
+#     name: AUTH-SERVICE
+#     security:
+#       basic:
+#         enabled: true
+#       jwt:
+#         secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+#         expiration: 86400000 # a day
+#         refresh-token:
+#           expiration: 604800000 # 7 days
+#   rabbitmq:
+#     host: localhost
+#     port: 5672
+#     username: guest
+#     password: guest
+#
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/auth_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&sslMode=DISABLED&useTimezone=true&serverTimezone=Africa/Luanda
+#     username: root
+#     password: hidden
+#
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     properties:
+#       hibernate:
+#         dialect: org.hibernate.dialect.MySQLDialect
+#
+# eureka:
+#   instance:
+#     client:
+#       serverUrl:
+#         defaultZone: http://localhost:8761/eureka/
+#
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#
+# logging:
+#   level:
+#     org:
+#       springframework:
+#         web: DEBUG
+#   pattern:
+#      level: '%5p [${spring.application.name:}, %X{traceId:-}, %X{spanId:-}]'
