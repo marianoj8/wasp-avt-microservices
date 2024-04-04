@@ -6,34 +6,34 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
-        <!--        <version>3.2.0</version>-->
+        <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.wasp.avt</groupId>
-    <artifactId>wasp-avt-ms</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>wasp-avt-ms</name>
-    <description>Spring Boot Project as employee-service</description>
+    <groupId>com.wb</groupId>
+    <artifactId>wasp-broker-ms</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>wasp-broker-ms</name>
+    <description>Spring Boot Project as WASP Broker Microservice</description>
     <packaging>pom</packaging>
 
     <properties>
         <java.version>17</java.version>
-        <spring.boot.dependecies.verions>3.1.5</spring.boot.dependecies.verions>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <spring.boot.dependecies.verions>3.2.4</spring.boot.dependecies.verions>
+        <spring-cloud.version>2023.0.0</spring-cloud.version>
     </properties>
 
     <modules>
         <module>core</module>
         <module>service-registry</module>
-        <module>api-gateway</module>
         <module>config-server</module>
+        <module>api-gateway</module>
         <module>auth-service</module>
         <module>token-service</module>
         <module>department-service</module>
         <module>organization-service</module>
         <module>employee-service</module>
+        <module>client-service</module>
     </modules>
 
     <dependencies>

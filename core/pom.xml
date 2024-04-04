@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.wasp.avt</groupId>
-        <artifactId>wasp-avt-ms</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath> <!-- lookup parent from wasp-avt-ms -->
+        <groupId>com.wb</groupId>
+        <artifactId>wasp-broker-ms</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>core</name>
     <description>Spring Boot Project as Core-Service</description>
     <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <java.version>17</java.version>

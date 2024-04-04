@@ -13,7 +13,7 @@ spring:
           clone-on-start: true
           default-label: main
           username: marianoj8
-          password: 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
+          password: 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
 
 eureka:
   instance:
